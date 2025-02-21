@@ -28,6 +28,7 @@ public class ClientEntity {
     @Column(name = "nro_date")
     private String numberDate;
     @Column(name = "register_date")
+    @Builder.Default
     private LocalDate registerDate = LocalDate.now();
     @Column(name = "is_active")
     @Pattern(regexp = "^[01]$", message = "El valor debe ser 0 o 1")
