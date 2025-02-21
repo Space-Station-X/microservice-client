@@ -1,10 +1,7 @@
 package com.practice.controller;
 
-import com.practice.RequestDto.ClientCreateRequestDto;
-import com.practice.RequestDto.ClientUpdateRequestDto;
-import com.practice.ResponseDto.ClientCreateResponseDto;
-import com.practice.ResponseDto.ClientPageResponseDto;
-import com.practice.ResponseDto.ClientResponseDto;
+import com.practice.RequestDto.*;
+import com.practice.ResponseDto.*;
 import com.practice.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/client")
+@RequestMapping("/api/v1/client")
 @Validated
 @Tag(name = "Clientes", description = "Clientes  API")
 public class ClientController {
@@ -56,7 +53,7 @@ public class ClientController {
     @Operation(summary = "Actualiza un cliente", description = "Actualiza  un cliente por ID")
     @ApiResponse(responseCode = "200", description = "Cliente actualizado correctamente")
     @ApiResponse(responseCode = "404", description = "No se pudo actualizar el cliente")
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ClientResponseDto> updateClientById(@PathVariable Long id, @RequestBody @Valid ClientUpdateRequestDto clientUpdateRequestDto) {
         ClientResponseDto response = clientService.updateClient(id, clientUpdateRequestDto);
         return new ResponseEntity<>(response, HttpStatus.OK);

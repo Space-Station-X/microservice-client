@@ -1,4 +1,4 @@
-package com.practice.config;
+package com.practice.config.jwt;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.FilterChain;
