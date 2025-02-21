@@ -1,4 +1,4 @@
-package com.practice.config;
+package com.practice.config.jwt;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
