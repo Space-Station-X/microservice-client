@@ -39,5 +39,15 @@ jobs:
       - name: Push Docker image
         run: docker push raydberg25/microservice-client:0.0.1-SNAPSHOT
 
+      - name: Install Koyeb CLI
+        run: |
+          curl -sSL https://koyeb.com/install.sh | sh
+          echo "${HOME}/.koyeb/bin" >> $GITHUB_PATH
+
+      - name: Redeploy service on Koyeb
+        run: koyeb service redeploy fatal-felicity/microservice-client --token $KOYEB_API_TOKEN
+        env:
+          KOYEB_API_TOKEN: ${{ secrets.KOYEB_API_TOKEN }}
+
 #      - name: Trigger Render Deploy
 #        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK}}"
