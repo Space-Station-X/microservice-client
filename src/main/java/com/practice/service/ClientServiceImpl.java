@@ -12,6 +12,7 @@ import com.practice.exceptions.ClientNotFoundException;
 import com.practice.mappers.ClientMapper;
 import com.practice.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
 
 import org.springframework.data.domain.Page;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 @Validated
+@Log4j2
 public class ClientServiceImpl implements ClientService {
     private final ClientMapper clientMapper;
     private final ClientRepository clientRepository;
@@ -78,13 +80,19 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     @Override
     public ClientResponseDto updateClient(Long id, ClientUpdateRequestDto clientUpdateRequestDto) {
-        ClientEntity client = clientRepository.findById(id)
-                .orElseThrow(() -> new ClientNotFoundException("No se encontró el cliente con id: " + id));
+        try {
+            ClientEntity client = clientRepository.findById(id)
+                    .orElseThrow(() -> new ClientNotFoundException("No se encontró el cliente con id: " + id));
 
-        updateClientFields(client, clientUpdateRequestDto);
+            updateClientFields(client, clientUpdateRequestDto);
 
-        ClientEntity updatedClient = clientRepository.save(client);
-        return clientMapper.toDtoClient(updatedClient);
+            ClientEntity updatedClient = clientRepository.save(client);
+            return clientMapper.toDtoClient(updatedClient);
+        } catch (Exception e) {
+            // Log the exception for debugging purposes
+            log.error("Error actualizando el cliente con id: " + id, e);
+            throw new RuntimeException("Error actualizando el cliente", e);
+        }
     }
 
     @Transactional
