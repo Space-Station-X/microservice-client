@@ -31,14 +31,9 @@ public class ClientEntity {
     @Builder.Default
     private LocalDate registerDate = LocalDate.now();
     @Column(name = "is_active")
-    @Pattern(regexp = "^[01]$", message = "El valor debe ser 0 o 1")
     private Integer isActive;
     @Column(name = "phone")
     private String phone;
-    @Email(
-            message = "Ingrese correctamente el email",
-            regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
-    )
     @Column(name = "email")
     private String email;
 
