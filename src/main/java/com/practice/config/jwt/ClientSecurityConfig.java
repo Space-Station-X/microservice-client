@@ -20,8 +20,8 @@ public class ClientSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-//                .anonymous(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtTokenValidatorFilter(jwtUtils), UsernamePasswordAuthenticationFilter.class);
